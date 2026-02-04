@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Our Memories ❤️</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 2.6rem;
+        }
+
+        /* Bigger frame */
+        .marquee-container {
+            width: 380px;
+            /* increased width */
+            height: 600px;
+            /* increased height */
+            overflow: hidden;
+            border-radius: 22px;
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Vertical scroll */
+        .marquee {
+            display: flex;
+            flex-direction: column;
+            animation: scrollUp 28s linear infinite;
+        }
+
+        /* Pause on hover */
+        .marquee-container:hover .marquee {
+            animation-play-state: paused;
+        }
+
+        /* NO gaps at all */
+        .marquee img {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* removes default spacing */
+            border-radius: 0;
+            /* edge-to-edge */
+            margin: 0;
+            padding: 0;
+        }
+
+        @keyframes scrollUp {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-50%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Our Memories 💕</h1>
+
+    <!-- Background Music -->
+    <audio autoplay loop>
+        <!-- Replace this with your own file -->
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support audio.
+    </audio>
+
+    <div class="marquee-container">
+        <div class="marquee">
+            <!-- Add up to 10 photos -->
+            <img src="memory1.jpg" alt="">
+            <img src="memory2.jpg" alt="">
+            <img src="memory3.jpg" alt="">
+            <img src="memory4.jpg" alt="">
+            <img src="memory5.jpg" alt="">
+            <img src="memory6.jpg" alt="">
+            <img src="memory7.jpg" alt="">
+            <img src="memory8.jpg" alt="">
+            <img src="memory9.jpg" alt="">
+            <img src="memory10.jpg" alt="">
+
+            <!-- Duplicate for seamless loop -->
+            <img src="memory1.jpg" alt="">
+            <img src="memory2.jpg" alt="">
+            <img src="memory3.jpg" alt="">
+            <img src="memory4.jpg" alt="">
+            <img src="memory5.jpg" alt="">
+            <img src="memory6.jpg" alt="">
+            <img src="memory7.jpg" alt="">
+            <img src="memory8.jpg" alt="">
+            <img src="memory9.jpg" alt="">
+            <img src="memory10.jpg" alt="">
+        </div>
+    </div>
+
+    <div class="music-note">
+        🎵 Music plays automatically (tap screen on mobile if needed)
+    </div>
+
+</body>
+
+</html>
