@@ -332,11 +332,13 @@
     }
 
     .button-row.row-2 {
-      gap: 25px;
+      margin-top: 15px;
+      gap: 110px;
     }
 
     .button-row.row-3 {
-      gap: 80px;
+      margin-top: 15px;
+      gap: 115px;
     }
 
     .unique-button-container {
@@ -366,6 +368,8 @@
     }
 
     .glow-button {
+      width: 110px;
+      height: 90px;
       padding: 30px 35px;
       font-size: 18px;
       font-weight: bold;
@@ -379,6 +383,10 @@
       transition: all 0.3s ease;
       box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
       animation: buttonEntrance 0.6s ease backwards;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .glow-button::before {
@@ -534,7 +542,7 @@
     /* Unique 8th button styling */
     .unique-button {
       padding: 40px 60px;
-      font-size: 22px;
+      font-size: 16px;
       font-weight: bold;
       color: white;
       background: linear-gradient(135deg, #c41e3a 0%, #8b0000 50%, #c41e3a 100%);
@@ -548,7 +556,14 @@
       box-shadow: 0 0 30px rgba(196, 30, 58, 0.6), 0 0 60px rgba(255, 215, 0, 0.4);
       animation: gradientShift 3s ease infinite;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      /* letter-spacing: 2px; */
+
+      width: 135px;
+      height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     @keyframes gradientShift {
@@ -586,7 +601,6 @@
     }
 
     .unique-button::after {
-      content: '✨';
       position: absolute;
       font-size: 20px;
       animation: sparkle 1.5s infinite;
@@ -678,21 +692,29 @@
     <div class="button-card">
       <div class="button-grid">
         <div class="button-row row-1">
-          <button class="glow-button" onclick="handleClick(1)">Rose Day 🌹</button>
-          <button class="glow-button" onclick="handleClick(2)">Propose Day 💍</button>
+          <button class="glow-button" onclick="handleClick(1)"><span>Rose</span> <span>Day</span>
+            <span>🌹</span></button>
+          <button class="glow-button" onclick="handleClick(2)"><span>Propose</span> <span>Day</span>
+            <span>💍</span></button>
         </div>
         <div class="button-row row-2">
-          <button class="glow-button" onclick="handleClick(3)">Chocolate Day 🍫</button>
-          <button class="glow-button" onclick="handleClick(4)">Teddy Day 🧸</button>
-          <button class="glow-button" onclick="handleClick(5)">Promise Day 🤞</button>
+          <button class="glow-button" onclick="handleClick(3)"><span>Chocolate</span> <span>Day</span>
+            <span>🍫</span></button>
+          <button class="glow-button" onclick="handleClick(4)"><span>Teddy</span> <span>Day</span>
+            <span>🧸</span></button>
+          <button class="glow-button" onclick="handleClick(5)"><span>Promise</span> <span>Day</span>
+            <span>🤞</span></button>
         </div>
         <div class="button-row row-3">
-          <button class="glow-button" onclick="handleClick(6)">Hug Day 🫂</button>
-          <button class="glow-button" onclick="handleClick(7)">Kiss Day 😘</button>
+          <button class="glow-button" onclick="handleClick(6)"><span>Hug</span> <span>Day</span>
+            <span>🫂</span></button>
+          <button class="glow-button" onclick="handleClick(7)"><span>Kiss</span> <span>Day</span>
+            <span>😘</span></button>
         </div>
       </div>
       <div class="unique-button-container">
-        <button class="unique-button" onclick="handleClick(8)">⭐ Valentines Day ⭐</button>
+        <button class="unique-button" onclick="handleClick(8)"><span>Valentines</span> <span>Day</span>
+          <span></button>
       </div>
     </div>
   </div>
