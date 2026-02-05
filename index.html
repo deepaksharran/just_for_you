@@ -286,12 +286,15 @@
     /* Button card */
     .button-card {
       flex: 1;
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.685);
       backdrop-filter: blur(10px);
       border-radius: 20px;
       padding: 30px;
       box-shadow: 0 8px 32px rgba(255, 105, 180, 0.2);
       animation: slideInRight 1s ease;
+      /* background-image: url("assets/logo.png");
+      background-size: 160% auto;
+      background-position: center; */
     }
 
     @keyframes slideInRight {
@@ -368,8 +371,8 @@
     }
 
     .glow-button {
-      width: 110px;
-      height: 90px;
+      width: 115px;
+      height: 105px;
       padding: 30px 35px;
       font-size: 18px;
       font-weight: bold;
@@ -644,7 +647,181 @@
         gap: 15px;
       }
     }
+
+    /* Overlay */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Show popup */
+    .popup-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Card */
+    .popup-card {
+      background: #ffffff;
+      width: 90%;
+      max-width: 360px;
+      padding: 24px 20px 30px;
+      border-radius: 20px;
+      text-align: center;
+      position: relative;
+      animation: popupScale 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .popup-heart-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .popup-heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 28px;
+      /* ❤️ bigger hearts */
+      opacity: 0.75;
+      animation: popupHeartFloat linear forwards;
+    }
+
+    @keyframes popupHeartFloat {
+      0% {
+        transform: translateY(0) scale(0.9) rotate(0deg);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: translateY(-120%) scale(1.3) rotate(12deg);
+        opacity: 0;
+      }
+    }
+
+
+    /* Animation */
+    @keyframes popupScale {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Quote */
+    .popup-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: #3a1c71;
+      margin-bottom: 20px;
+    }
+
+    /* Close button */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+      color: #555;
+    }
+
+    /* Audio widget */
+    .popup-card audio {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .popup-image {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin: 14px 0 10px;
+      box-shadow: 0 6px 20px rgba(255, 105, 180, 0.35);
+      animation: imageFadeIn 0.6s ease;
+    }
+
+    @keyframes imageFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      pointer-events: none;
+      filter: grayscale(50%);
+    }
+
+    .countdown {
+      font-size: 11px;
+      margin-top: 4px;
+      color: #ffd6ff;
+      opacity: 0.85;
+    }
+
+    /* Confetti CSS */
+    #confettiContainer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      /* 👈 very important */
+    }
+
+
+    .confetti-heart {
+      position: absolute;
+      font-size: 22px;
+      opacity: 0.9;
+      animation: confettiBurst linear forwards;
+    }
+
+    @keyframes confettiBurst {
+      0% {
+        transform: translate(0, 0) scale(0.8) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(var(--x), var(--y)) scale(1.3) rotate(360deg);
+        opacity: 0;
+      }
+    }
   </style>
+
+
 </head>
 
 <body>
@@ -692,37 +869,213 @@
     <div class="button-card">
       <div class="button-grid">
         <div class="button-row row-1">
-          <button class="glow-button" onclick="handleClick(1)"><span>Rose</span> <span>Day</span>
-            <span>🌹</span></button>
-          <button class="glow-button" onclick="handleClick(2)"><span>Propose</span> <span>Day</span>
-            <span>💍</span></button>
+          <button class="glow-button" data-unlock="2026-02-07T02:20:00+05:30"
+            data-quote="In the world of Titanic, you’ll always be my Rose 🌹" data-audio="audio/1RD.mp3"
+            data-image="assets/1RD.jpg" onclick="openPopup(this)"><span>Rose
+              Day</span>
+            <span>🌹</span><span class="countdown"></span></button>
+          <button class="glow-button" data-unlock="2026-02-08T00:00:00+05:30" data-quote="🫣" data-audio="audio/2PD.mp3"
+            data-image="assets/2PD.png" onclick="openPopup(this)"><span>Propose
+              Day</span>
+            <span>💍</span><span class="countdown"></span></button>
         </div>
         <div class="button-row row-2">
-          <button class="glow-button" onclick="handleClick(3)"><span>Chocolate</span> <span>Day</span>
-            <span>🍫</span></button>
-          <button class="glow-button" onclick="handleClick(4)"><span>Teddy</span> <span>Day</span>
-            <span>🧸</span></button>
-          <button class="glow-button" onclick="handleClick(5)"><span>Promise</span> <span>Day</span>
-            <span>🤞</span></button>
+          <button class="glow-button" data-unlock="2026-02-09T00:00:00+05:30"
+            data-quote="Will order chocolates for you tomorrow" data-audio="audio/3CD.mp3"
+            data-image="assets/3CD.png" onclick="openPopup(this)"><span>Chocolate
+              Day</span>
+            <span>🍫</span><span class="countdown"></span></button>
+          <button class="glow-button" data-unlock="2026-02-10T00:00:00+05:30"
+            data-quote="In the world of Titanic, you’ll always be my Rose 🌹" data-audio="audio/4TD.mp3"
+            data-image="assets/4TD.jpg" onclick="openPopup(this)"><span>Teddy
+              Day</span>
+            <span>🧸</span><span class="countdown"></span></button>
+          <button class="glow-button" data-unlock="2026-02-11T00:00:00+05:30"
+            data-quote="In the world of Titanic, you’ll always be my Rose 🌹" data-audio="audio/5PD.mp3"
+            data-image="assets/5PD.jpg" onclick="openPopup(this)"><span>Promise
+              Day</span>
+            <span>🤞</span><span class="countdown"></span></button>
         </div>
         <div class="button-row row-3">
-          <button class="glow-button" onclick="handleClick(6)"><span>Hug</span> <span>Day</span>
-            <span>🫂</span></button>
-          <button class="glow-button" onclick="handleClick(7)"><span>Kiss</span> <span>Day</span>
-            <span>😘</span></button>
+          <button class="glow-button" data-unlock="2026-02-12T00:00:00+05:30"
+            data-quote="In the world of Titanic, you’ll always be my Rose 🌹" data-audio="audio/6HD.mp3"
+            data-image="assets/6HD.jpg" onclick="openPopup(this)"><span>Hug
+              Day</span>
+            <span>🫂</span><span class="countdown"></span></button>
+          <button class="glow-button" data-unlock="2026-02-13T00:00:00+05:30"
+            data-quote="In the world of Titanic, you’ll always be my Rose 🌹" data-audio="audio/7KD.mp3"
+            data-image="assets/7KD.jpg" onclick="openPopup(this)"><span>Kiss
+              Day</span>
+            <span>😘</span><span class="countdown"></span></button>
         </div>
       </div>
       <div class="unique-button-container">
-        <button class="unique-button" onclick="handleClick(8)"><span>Valentines</span> <span>Day</span>
+        <button id="valentineBtn" class="unique-button" data-unlock="2026-02-14T00:00:00+05:30"
+          onclick="launchHeartConfetti(this)"><span>Valentines</span> <span>Day</span><span class="countdown"></span>
           <span></button>
       </div>
     </div>
   </div>
 
+  <!-- Popup Overlay -->
+  <div id="popupOverlay" class="popup-overlay">
+    <div class="popup-card">
+      <div class="popup-heart-layer"></div>
+
+      <button class="close-btn" onclick="closePopup()">×</button>
+
+      <p id="popupQuote" class="popup-quote">
+        “In a world full of noise, you’re my favorite feeling.”
+      </p>
+      <img src="" alt="Picture" class="popup-image" id="popupImage">
+      <audio id="popupAudio" controls autoplay>
+        <!-- <source src="audio/love-song.mp3" type="audio/mpeg"> -->
+      </audio>
+      <p style="font-size:12px;opacity:0.7;margin-top:6px">
+        Tap ▶️ if music doesn’t start
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Cofetti Effect on Valentine button  -->
+  <div id="confettiContainer"></div>
   <script>
-    function handleClick(buttonNumber) {
-      alert(`You clicked Button ${buttonNumber}! 💖`);
+
+    //unlock Button
+    const timedButtons = document.querySelectorAll("button[data-unlock]");
+
+    function updateCountdowns() {
+      const now = new Date().getTime();
+
+      timedButtons.forEach(button => {
+        const unlockTime = new Date(button.dataset.unlock).getTime();
+        const countdownEl = button.querySelector(".countdown");
+
+        if (now >= unlockTime) {
+          button.disabled = false;
+          if (countdownEl) countdownEl.textContent = "";
+          return;
+        }
+
+        button.disabled = true;
+
+        const diff = unlockTime - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hrs = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / (1000 * 60)) % 60);
+
+        if (countdownEl) {
+          countdownEl.textContent =
+            days > 0
+              ? `${days}d ${hrs}h left`
+              : `${hrs}h ${mins}m left`;
+        }
+      });
     }
+
+    updateCountdowns();
+    setInterval(updateCountdowns, 1000);
+
+    //------------------------------------------------------------------------------------------------------------
+    // Pop Up Cards 
+    let popupHeartInterval;
+
+    function startPopupHearts() {
+      const layer = document.querySelector('.popup-heart-layer');
+
+      popupHeartInterval = setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'popup-heart';
+        heart.innerText = '❤️';
+
+        heart.style.left = Math.random() * 85 + '%';
+        heart.style.fontSize = (24 + Math.random() * 16) + 'px';
+        heart.style.animationDuration = (6 + Math.random() * 5) + 's';
+
+        layer.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 12000);
+      }, 700);
+    }
+
+    function stopPopupHearts() {
+      clearInterval(popupHeartInterval);
+    }
+    function openPopup(button) {
+      const overlay = document.getElementById("popupOverlay");
+      const quoteEl = document.getElementById("popupQuote");
+      const imageEl = document.getElementById("popupImage");
+      const audioEl = document.getElementById("popupAudio");
+
+      const quote = button.dataset.quote;
+      const audio = button.dataset.audio;
+      const image = button.dataset.image;
+
+      quoteEl.textContent = quote || "";
+
+      if (image) {
+        imageEl.src = image;
+        imageEl.style.display = "block";
+      } else {
+        imageEl.style.display = "none";
+      }
+
+      if (audio) {
+        audioEl.src = audio;
+        audioEl.load();
+        audioEl.play().catch();
+      }
+
+      overlay.classList.add("active");
+      startPopupHearts();
+    }
+
+    function closePopup() {
+      const popup = document.getElementById("popupOverlay");
+      const audio = document.getElementById("popupAudio");
+
+      audio.pause();
+      audio.currentTime = 0;
+
+      stopPopupHearts();
+      popup.classList.remove("active");
+    }
+
+    //--------------------------------------------------------------------------------------
+    //Confetti effect 
+    function launchHeartConfetti(button) {
+      const container = document.getElementById("confettiContainer");
+      const hearts = ["❤️", "💜", "💖", "💕"];
+
+      const rect = button.getBoundingClientRect();
+      const originX = rect.left + rect.width / 2;
+      const originY = rect.top + rect.height / 2;
+
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement("div");
+        heart.className = "confetti-heart";
+        heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+
+        const x = (Math.random() - 0.5) * 300;
+        const y = (Math.random() - 1) * 350;
+
+        heart.style.left = originX + "px";
+        heart.style.top = originY + "px";
+        heart.style.setProperty("--x", x + "px");
+        heart.style.setProperty("--y", y + "px");
+        heart.style.animationDuration = (1.8 + Math.random()) + "s";
+
+        container.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 2500);
+      }
+      /* ✅ Redirect AFTER confetti */
+      setTimeout(() => {
+        window.location.href = "index1.html"; // your new page
+      }, 1800);
+    }
+
   </script>
 </body>
 
