@@ -1,24 +1,707 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Will you be my Valentine? 💘</title>
-  <link rel="stylesheet" href="css/style1.css">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@300;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Tale</title>
+  <link rel="shortcut icon" href="assets/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffd6e8 0%, #ffe5f0 50%, #fff0f5 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Floating hearts animation */
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      color: rgba(255, 105, 180, 0.4);
+      animation: float 15s infinite;
+    }
+
+    .heart:nth-child(1) {
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .heart:nth-child(2) {
+      left: 20%;
+      animation-delay: 2s;
+      font-size: 18px;
+    }
+
+    .heart:nth-child(3) {
+      left: 30%;
+      animation-delay: 4s;
+    }
+
+    .heart:nth-child(4) {
+      left: 40%;
+      animation-delay: 6s;
+      font-size: 20px;
+    }
+
+    .heart:nth-child(5) {
+      left: 50%;
+      animation-delay: 8s;
+    }
+
+    .heart:nth-child(6) {
+      left: 60%;
+      animation-delay: 10s;
+      font-size: 22px;
+    }
+
+    .heart:nth-child(7) {
+      left: 70%;
+      animation-delay: 12s;
+    }
+
+    .heart:nth-child(8) {
+      left: 80%;
+      animation-delay: 14s;
+      font-size: 19px;
+    }
+
+    .heart:nth-child(9) {
+      left: 90%;
+      animation-delay: 1s;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(255, 182, 193, 0.3);
+      backdrop-filter: blur(10px);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 30px rgba(255, 105, 180, 0.2);
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 32px;
+      animation: pulse 2s infinite;
+    }
+
+    .logo img {
+      object-fit: cover;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    .brand-name {
+      font-size: 34px;
+      font-weight: bold;
+      color: #c41e3a;
+      text-shadow: 1px 1px 2px rgba(255, 182, 193, 0.5);
+    }
+
+    .navbar-menu {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .navbar-menu a {
+      color: #c41e3a;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .navbar-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff69b4;
+      transition: width 0.3s ease;
+    }
+
+    .navbar-menu a:hover::after {
+      width: 100%;
+    }
+
+    .navbar-menu a:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Main content */
+    .container {
+      display: flex;
+      gap: 30px;
+      padding: 50px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Photo card */
+    .photo-card {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(255, 105, 180, 0.2);
+      animation: slideInLeft 1s ease;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-100px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+
+    @keyframes rotate3d {
+
+      0%,
+      100% {
+        transform: perspective(1000px) rotateY(0deg);
+      }
+
+      50% {
+        transform: perspective(1000px) rotateY(10deg);
+      }
+    }
+
+    .photo-wrapper {
+      position: relative;
+      width: 90%;
+      max-width: 420px;
+      /* controls card width */
+      aspect-ratio: 4 / 4.5;
+      /* 🔥 forces 16:9 */
+      overflow: hidden;
+      border-radius: 15px;
+      margin: 0 auto;
+      animation: rotate3d 4s infinite ease-in-out;
+    }
+
+    .photo-wrapper img {
+      width: 100%;
+      height: 110%;
+      object-fit: cover;
+      /* fills 16:9 frame */
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .photo-wrapper:hover img {
+      transform: scale(1.1);
+    }
+
+    .photo-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255, 105, 180, 0.3), rgba(138, 43, 226, 0.3));
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+
+    .photo-wrapper:hover .photo-overlay {
+      opacity: 1;
+    }
+
+    .photo-title {
+      margin-top: 20px;
+      color: #c41e3a;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      font-family: 'Dancing Script', cursive;
+      text-shadow: 1px 1px 2px rgba(255, 182, 193, 0.5);
+    }
+
+    /* Button card */
+    .button-card {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(255, 105, 180, 0.2);
+      animation: slideInRight 1s ease;
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .button-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 20px;
+      align-items: center;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Heart shape layout:
+           Row 1: 2 buttons at top (wide gap)
+           Row 2: 3 buttons in middle (widest part)
+           Row 3: 2 buttons lower (narrowing)
+        */
+
+    .button-row.row-1 {
+      gap: 120px;
+    }
+
+    .button-row.row-2 {
+      gap: 25px;
+    }
+
+    .button-row.row-3 {
+      gap: 80px;
+    }
+
+    .unique-button-container {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      animation: uniqueEntrance 1.5s ease;
+    }
+
+    .love-title {
+      padding-left: 16px;
+      flex-grow: 1;
+      font-family: 'Bitcount Grid Double', serif;
+    }
+
+
+    @keyframes uniqueEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .glow-button {
+      padding: 30px 35px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+      animation: buttonEntrance 0.6s ease backwards;
+    }
+
+    .glow-button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    .glow-button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+
+    @keyframes buttonEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .glow-button:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .glow-button:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .glow-button:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .glow-button:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    .glow-button:nth-child(5) {
+      animation-delay: 0.5s;
+    }
+
+    .glow-button:nth-child(6) {
+      animation-delay: 0.6s;
+    }
+
+    .glow-button:nth-child(7) {
+      animation-delay: 0.7s;
+    }
+
+    .glow-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(255, 105, 180, 0.8);
+    }
+
+    .glow-button:active {
+      transform: scale(0.98);
+    }
+
+    /* Different colors for each button - softer pink/rose theme */
+    .button-row.row-1 .glow-button:first-child {
+      background: linear-gradient(135deg, #ffb6c1 0%, #ff69b4 100%);
+      box-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+    }
+
+    .button-row.row-1 .glow-button:last-child {
+      background: linear-gradient(135deg, #ffc0cb 0%, #ff1493 100%);
+      box-shadow: 0 0 20px rgba(255, 192, 203, 0.5);
+    }
+
+    .button-row.row-2 .glow-button:first-child {
+      background: linear-gradient(135deg, #ffb6d9 0%, #ff69b4 100%);
+      box-shadow: 0 0 20px rgba(255, 182, 217, 0.5);
+    }
+
+    .button-row.row-2 .glow-button:nth-child(2) {
+      background: linear-gradient(135deg, #ffa6c9 0%, #ff1493 100%);
+      box-shadow: 0 0 20px rgba(255, 166, 201, 0.5);
+    }
+
+    .button-row.row-2 .glow-button:last-child {
+      background: linear-gradient(135deg, #ff96c7 0%, #ff69b4 100%);
+      box-shadow: 0 0 20px rgba(255, 150, 199, 0.5);
+    }
+
+    .button-row.row-3 .glow-button:first-child {
+      background: linear-gradient(135deg, #ffd1dc 0%, #ff69b4 100%);
+      box-shadow: 0 0 20px rgba(255, 209, 220, 0.5);
+    }
+
+    .button-row.row-3 .glow-button:last-child {
+      background: linear-gradient(135deg, #ffaad4 0%, #ff1493 100%);
+      box-shadow: 0 0 20px rgba(255, 170, 212, 0.5);
+    }
+
+    .glow-button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+
+    .glow-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(255, 105, 180, 0.8);
+    }
+
+    .glow-button:active {
+      transform: scale(0.98);
+    }
+
+    /* Unique 8th button styling */
+    .unique-button {
+      padding: 40px 60px;
+      font-size: 22px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #c41e3a 0%, #8b0000 50%, #c41e3a 100%);
+      background-size: 200% 200%;
+      border: 3px solid #ffd700;
+      border-radius: 50px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 30px rgba(196, 30, 58, 0.6), 0 0 60px rgba(255, 215, 0, 0.4);
+      animation: gradientShift 3s ease infinite;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    @keyframes gradientShift {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .unique-button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+      transform: rotate(45deg);
+      animation: shine-unique 2s infinite;
+    }
+
+    @keyframes shine-unique {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+
+    .unique-button::after {
+      content: '✨';
+      position: absolute;
+      font-size: 20px;
+      animation: sparkle 1.5s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sparkle {
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    .unique-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 50px rgba(196, 30, 58, 0.9), 0 0 80px rgba(255, 215, 0, 0.6);
+      border-color: #fff;
+    }
+
+    .unique-button:active {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .navbar {
+        padding: 15px 20px;
+      }
+
+      .navbar-menu {
+        gap: 15px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <main class="page">
-    <div class="card">
-      <h1>Will you be my Valentine?</h1>
-      <p class="subtitle">I promise to make you smile every day 😊</p>
-      <div class="buttons">
-        <a class="btn yes" href="q2.html">Yes 💖</a>
-        <a class="btn no" href="q2.html">No 😢</a>
+  <!-- Floating hearts background -->
+  <div class="heart">❤️</div>
+  <div class="heart">💕</div>
+  <div class="heart">💖</div>
+  <div class="heart">💗</div>
+  <div class="heart">💓</div>
+  <div class="heart">💞</div>
+  <div class="heart">💝</div>
+  <div class="heart">❤️</div>
+  <div class="heart">💕</div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <div class="logo">
+        <!-- <img src="assets/logo.png" alt="♾️" width="8%" height="8%"> -->
+        ❤️
+      </div>
+
+      <div class="brand-name">
+        <h4 class="love-title">Love Tale</h4>
       </div>
     </div>
-    <footer class="hint">Tip: Be honest with your heart 💌</footer>
-  </main>
-  <script src="js/params.js"></script>
+    <ul class="navbar-menu">
+      <li><a href="#game">Game</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main content -->
+  <div class="container">
+    <!-- Photo card -->
+    <div class="photo-card">
+      <div class="photo-wrapper">
+        <img src="assets/homeimg.jpg" alt="Love themed photo">
+        <div class="photo-overlay">💕</div>
+      </div>
+      <div class="photo-title">You are here in this page jsut because you sent me a reel ! </div>
+    </div>
+
+    <!-- Button card -->
+    <div class="button-card">
+      <div class="button-grid">
+        <div class="button-row row-1">
+          <button class="glow-button" onclick="handleClick(1)">Rose Day 🌹</button>
+          <button class="glow-button" onclick="handleClick(2)">Propose Day 💍</button>
+        </div>
+        <div class="button-row row-2">
+          <button class="glow-button" onclick="handleClick(3)">Chocolate Day 🍫</button>
+          <button class="glow-button" onclick="handleClick(4)">Teddy Day 🧸</button>
+          <button class="glow-button" onclick="handleClick(5)">Promise Day 🤞</button>
+        </div>
+        <div class="button-row row-3">
+          <button class="glow-button" onclick="handleClick(6)">Hug Day 🫂</button>
+          <button class="glow-button" onclick="handleClick(7)">Kiss Day 😘</button>
+        </div>
+      </div>
+      <div class="unique-button-container">
+        <button class="unique-button" onclick="handleClick(8)">⭐ Valentines Day ⭐</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function handleClick(buttonNumber) {
+      alert(`You clicked Button ${buttonNumber}! 💖`);
+    }
+  </script>
 </body>
+
 </html>
