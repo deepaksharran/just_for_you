@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffa5c5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
+        }
+
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #ff1744;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .emoji {
+            font-size: 100px;
+            margin: 20px 0;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-height: 60px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        #yesBtn:hover {
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+        }
+
+        #noBtn {
+            background: linear-gradient(135deg, #f44336, #e57373);
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            position: relative;
+            transition: all 0.4s ease-out;
+        }
+
+        #noBtn.flying {
+            position: fixed;
+        }
+
+        .celebration {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .celebration h2 {
+            color: #ff1744;
+            font-size: 2em;
+            margin: 20px 0;
+        }
+
+        .celebration p {
+            color: #666;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff1744;
+            animation: confettiFall 3s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="question">
+            <h1>Will You Be My Valentine? 💕</h1>
+            <div class="emoji">🥺</div>
+            <div class="buttons">
+                <button id="yesBtn">Yes! 💖</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+        
+        <div id="celebration" class="celebration">
+            <div class="emoji">🎉</div>
+            <h2>Whatever you ask I'll deliver.! 💝</h2>
+            <p> My cute Business Analyst got a personalized Developer.</p>
+            <div class="emoji">😍</div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts background
+        for (let i = 0; i < 12; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = ['❤️', '💕', '💖', '💗', '💝'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(heart);
+        }
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const question = document.getElementById('question');
+        const celebration = document.getElementById('celebration');
+        const buttonsContainer = document.querySelector('.buttons');
+
+        let noBtnSize = 18;
+        let yesBtnScale = 1;
+        let escapeCount = 0;
+        let hasMovedOnce = false;
+        let lastEscapeTime = 0;
+        let cooldownPeriod = 500; // 500ms cooldown between counts
+        
+        const yesTexts = [
+            "Yes! 💖",
+            "Yes! Please! 💕",
+            "Pretty Please? 🥺",
+            "I'm Begging You! SAY YES! 💕",
+            "You don't have any other option. Just click here! 💝"
+        ];
+
+        // Function to move No button away from cursor
+        function moveNoButton(e) {
+            const noBtnRect = noBtn.getBoundingClientRect();
+            const noBtnCenterX = noBtnRect.left + noBtnRect.width / 2;
+            const noBtnCenterY = noBtnRect.top + noBtnRect.height / 2;
+            
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            
+            // Calculate distance between cursor and button
+            const distanceX = mouseX - noBtnCenterX;
+            const distanceY = mouseY - noBtnCenterY;
+            const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+            
+            // If cursor is within 80px of the No button, move it away
+            if (distance < 80) {
+                const currentTime = Date.now();
+                
+                // Only count as an escape if enough time has passed since last escape
+                const shouldCount = (currentTime - lastEscapeTime) > cooldownPeriod;
+                
+                // Change to fixed position on first move
+                if (!hasMovedOnce) {
+                    noBtn.classList.add('flying');
+                    hasMovedOnce = true;
+                }
+                
+                if (shouldCount) {
+                    escapeCount++;
+                    lastEscapeTime = currentTime;
+                }
+                
+                // Calculate direction away from cursor
+                const angle = Math.atan2(distanceY, distanceX);
+                const moveDistance = 200;
+                
+                let newX = noBtnCenterX - Math.cos(angle) * moveDistance;
+                let newY = noBtnCenterY - Math.sin(angle) * moveDistance;
+                
+                // Keep button within viewport with padding
+                const padding = 80;
+                
+                // Check if Yes button has reached max size (escapeCount >= 15 means final text)
+                if (escapeCount >= 15) {
+                    // Make No button fly off screen
+                    newX = Math.random() > 0.5 ? -200 : window.innerWidth + 200;
+                    newY = Math.random() * window.innerHeight;
+                } else {
+                    // Keep button within viewport but add randomness if at edge
+                    const atLeftEdge = newX <= padding;
+                    const atRightEdge = newX >= window.innerWidth - noBtnRect.width - padding;
+                    const atTopEdge = newY <= padding;
+                    const atBottomEdge = newY >= window.innerHeight - noBtnRect.height - padding;
+                    
+                    // If at any edge, add perpendicular movement to escape
+                    if (atLeftEdge || atRightEdge || atTopEdge || atBottomEdge) {
+                        const perpendicularAngle = angle + Math.PI / 2;
+                        const randomDirection = Math.random() > 0.5 ? 1 : -1;
+                        newX += Math.cos(perpendicularAngle) * 150 * randomDirection;
+                        newY += Math.sin(perpendicularAngle) * 150 * randomDirection;
+                    }
+                    
+                    // Constrain to viewport
+                    newX = Math.max(padding, Math.min(window.innerWidth - noBtnRect.width - padding, newX));
+                    newY = Math.max(padding, Math.min(window.innerHeight - noBtnRect.height - padding, newY));
+                }
+                
+                noBtn.style.left = newX + 'px';
+                noBtn.style.top = newY + 'px';
+                
+                // Shrink the No button only when counting
+                if (shouldCount) {
+                    noBtnSize = Math.max(10, noBtnSize - 0.8);
+                    noBtn.style.fontSize = noBtnSize + 'px';
+                    noBtn.style.padding = (noBtnSize * 0.8) + 'px ' + (noBtnSize * 1.6) + 'px';
+                }
+                
+                // Grow the Yes button every 3 tries (stop growing after reaching max size)
+                if (shouldCount && escapeCount < 15 && escapeCount % 3 === 0) {
+                    yesBtnScale += 0.15;
+                    yesBtn.style.transform = `scale(${yesBtnScale})`;
+                }
+                
+                // Update Yes button text based on escape count (every 3 tries)
+                const textIndex = Math.min(Math.floor(escapeCount / 3), yesTexts.length - 1);
+                yesBtn.textContent = yesTexts[textIndex];
+            }
+        }
+
+        // Track mouse movement
+        document.addEventListener('mousemove', moveNoButton);
+
+        yesBtn.addEventListener('click', () => {
+            question.style.display = 'none';
+            celebration.style.display = 'block';
+            
+            // Create confetti
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = ['#ff1744', '#ff5252', '#ff80ab', '#ffc107', '#4caf50'][Math.floor(Math.random() * 5)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        });
+    </script>
+</body>
+</html>
