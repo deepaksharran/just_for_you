@@ -385,7 +385,7 @@
                     musicStarted = true;
                     
                     // Start the photo scroll animation
-                    photoMarquee.style.animationPlayState = 'running';
+                    
                 }).catch(err => {
                     console.log('Music play failed:', err);
                 });
@@ -420,7 +420,6 @@
                 isPlaying = false;
             } else {
                 music.play();
-                photoMarquee.style.animationPlayState = 'running';
                 musicControl.textContent = '🎵 Music Playing... (Click to Pause)';
                 musicControl.classList.add('playing');
                 isPlaying = true;
