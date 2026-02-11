@@ -183,11 +183,16 @@
             }
         }
 
-        /* Vertical scroll with enhanced smoothness */
+        /* Vertical scroll with enhanced smoothness - 70 SECONDS */
         .marquee {
             display: flex;
             flex-direction: column;
-            animation: scrollUp 35s linear infinite;
+            animation: scrollUp 70s linear forwards;
+            animation-play-state: running;
+        }
+
+        .marquee.paused {
+            animation-play-state: paused;
         }
 
         /* Pause on hover with smooth transition */
@@ -215,7 +220,7 @@
                 transform: translateY(0);
             }
             100% {
-                transform: translateY(-50%);
+                transform: translateY(calc(-100% + 650px));
             }
         }
 
@@ -273,69 +278,6 @@
             background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
             margin: 15px auto 35px;
             animation: fadeIn 1.5s ease-out 0.5s both;
-        }
-
-        /* Music start overlay */
-        .music-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(139, 21, 56, 0.95);
-            backdrop-filter: blur(20px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            cursor: pointer;
-            transition: opacity 0.5s ease;
-        }
-
-        .music-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .play-button {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-gold), #ffa500);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.4);
-            animation: pulse 2s ease-in-out infinite;
-            margin-bottom: 30px;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 20px 60px rgba(255, 215, 0, 0.4);
-            }
-            50% {
-                transform: scale(1.1);
-                box-shadow: 0 25px 70px rgba(255, 215, 0, 0.6);
-            }
-        }
-
-        .overlay-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .overlay-subtext {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            opacity: 0.9;
         }
 
         /* Responsive adjustments */
@@ -399,8 +341,8 @@
         <p class="subtitle">MOMENTS WORTH CHERISHING</p>
 
         <div class="marquee-container">
-            <div class="marquee">
-                <!-- Add up to 10 photos -->
+            <div class="marquee" id="photoMarquee">
+                <!-- 17 photos -->
                 <img src="memory1.png" alt="Memory 1">
                 <img src="memory2.png" alt="Memory 2">
                 <img src="memory3.png" alt="Memory 3">
@@ -411,16 +353,13 @@
                 <img src="memory8.png" alt="Memory 8">
                 <img src="memory9.png" alt="Memory 9">
                 <img src="memory10.png" alt="Memory 10">
-
-                <!-- Duplicate for seamless loop -->
-                <img src="memory11.png" alt="Memory 1">
-                <img src="memory12.png" alt="Memory 2">
-                <img src="memory13.png" alt="Memory 3">
-                <img src="memory14.png" alt="Memory 4">
-                <img src="memory15.png" alt="Memory 5">
-                <img src="memory16.png" alt="Memory 6">
-                <img src="memory17.png" alt="Memory 7">
-                
+                <img src="memory11.png" alt="Memory 11">
+                <img src="memory12.png" alt="Memory 12">
+                <img src="memory13.png" alt="Memory 13">
+                <img src="memory14.png" alt="Memory 14">
+                <img src="memory15.png" alt="Memory 15">
+                <img src="memory16.png" alt="Memory 16">
+                <img src="memory17.png" alt="Memory 17">
             </div>
         </div>
     </div>
@@ -432,6 +371,7 @@
     <script>
         const music = document.getElementById('bgMusic');
         const musicControl = document.getElementById('musicControl');
+        const photoMarquee = document.getElementById('photoMarquee');
         let isPlaying = false;
         let musicStarted = false;
 
@@ -443,6 +383,9 @@
                     musicControl.classList.add('playing');
                     isPlaying = true;
                     musicStarted = true;
+                    
+                    // Start the photo scroll animation
+                    photoMarquee.style.animationPlayState = 'running';
                 }).catch(err => {
                     console.log('Music play failed:', err);
                 });
@@ -454,16 +397,30 @@
         document.addEventListener('mouseenter', startMusicOnHover, { once: true });
         document.addEventListener('touchstart', startMusicOnHover, { once: true });
 
+        // Pause animation when it reaches the last image (after 70 seconds)
+        setTimeout(() => {
+            photoMarquee.style.animationPlayState = 'paused';
+        }, 70000);
+
+        // When music ends, you can add additional behavior if needed
+        music.addEventListener('ended', () => {
+            musicControl.textContent = '🎵 Music Ended';
+            musicControl.classList.remove('playing');
+            isPlaying = false;
+        });
+
         // Manual control with the button
         musicControl.addEventListener('click', function(e) {
             e.stopPropagation();
             if (isPlaying) {
                 music.pause();
+                photoMarquee.style.animationPlayState = 'paused';
                 musicControl.textContent = '🎵 Click to Play Music';
                 musicControl.classList.remove('playing');
                 isPlaying = false;
             } else {
                 music.play();
+                photoMarquee.style.animationPlayState = 'running';
                 musicControl.textContent = '🎵 Music Playing... (Click to Pause)';
                 musicControl.classList.add('playing');
                 isPlaying = true;
