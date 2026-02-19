@@ -376,7 +376,7 @@
         let musicStarted = false;
 
         // Start music immediately on mouse movement/hover
-        function startMusicOnHover() {
+        function startMusicOnInteraction() {
             if (!musicStarted) {
                 music.play().then(() => {
                     musicControl.textContent = '🎵 Music Playing... (Click to Pause)';
@@ -393,14 +393,9 @@
         }
 
         // Listen for ANY mouse movement on the page
-        document.addEventListener('mousemove', startMusicOnHover, { once: true });
-        document.addEventListener('mouseenter', startMusicOnHover, { once: true });
-        document.addEventListener('touchstart', startMusicOnHover, { once: true });
-
-        // Pause animation when it reaches the last image (after 70 seconds)
-        setTimeout(() => {
-            photoMarquee.style.animationPlayState = 'paused';
-        }, 73000);
+        document.addEventListener('click', startMusicOnInteraction, { once: true });
+        document.addEventListener('touchstart', startMusicOnInteraction, { once: true });
+        document.addEventListener('mousemove', startMusicOnInteraction, { once: true });
 
         // When music ends, you can add additional behavior if needed
         music.addEventListener('ended', () => {
