@@ -411,12 +411,12 @@
             e.stopPropagation();
             if (isPlaying) {
                 music.pause();
-                photoMarquee.style.animationPlayState = 'paused';
                 musicControl.textContent = '🎵 Click to Play Music';
                 musicControl.classList.remove('playing');
                 isPlaying = false;
             } else {
                 music.play();
+                photoMarquee.style.animationPlayState = 'running';
                 musicControl.textContent = '🎵 Music Playing... (Click to Pause)';
                 musicControl.classList.add('playing');
                 isPlaying = true;
