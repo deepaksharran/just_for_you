@@ -187,7 +187,9 @@
         .marquee {
             display: flex;
             flex-direction: column;
-            animation: scrollUp 70s linear 3s forwards;
+            animation: scrollUp 70s linear 3s;
+            animation-fill-mode: forwards;
+            animation-play-state: running;
             animation-play-state: running;
         }
 
@@ -391,10 +393,6 @@
                 });
             }
         }
-
-        photoMarquee.addEventListener('animationend', () => {
-            photoMarquee.style.animationPlayState = 'paused';
-        });
 
         // Listen for ANY mouse movement on the page
         document.addEventListener('click', startMusicOnInteraction, { once: true });
